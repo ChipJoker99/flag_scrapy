@@ -45,8 +45,7 @@ This Python script downloads SVG files of country flags from a specified URL. If
 ## Install Requirements
 In order to install requirements, run the script
 
-      ```bash
-         pip install -r requirements.txt
+`pip install -r requirements.txt`
 
 ## Notes:
 - The script creates a `logs` folder to store log files.

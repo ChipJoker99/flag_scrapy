@@ -57,11 +57,9 @@ Here is an example of the log entry
       2024-07-31 16:16:0807 - 3. FILE DOWNLOADED: gbr.svg in local/destination/folder
 
 ## Install Requirements
-In order to install requirements, run the script
-      
-      python flag_scrape.py
+To install the libraries in the `requirements.txt` file, run the command:
 
-
+      pip install -r requirements.txt
 
 ## Notes
 - The script creates a `logs` folder to store log files.

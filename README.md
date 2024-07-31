@@ -11,23 +11,27 @@ Generates SVG files for missing flags using the `pycountry` and `pycountry_conve
 
 ## How to Use:
 1. Ensure you have the required libraries installed:
+   
    ```bash
    pip install requests pycountry pycountry-convert
 
-2. Modify `config.json` with the following structure:
+3. Modify `config.json` with the following structure:
+   
    ```json
      {
       "base_url": "https://www.url.com/folder1/folder2/folder3/",
       "destination_folder": "local/destination/folder"
      }
    
-3. Modify `file_names.json` with the list of file names:
+4. Modify `file_names.json` with the list of file names:
+   
    ```json
     [
         "file1.svg", "file2.svg", "file3.svg"
     ]
 
-4. Run the script:
+6. Run the script:
+   
 `python flag_scrape.py`
 
 ## Example Log Entry:

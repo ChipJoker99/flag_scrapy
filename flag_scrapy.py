@@ -14,6 +14,14 @@ destination_folder = config['destination_folder']
 with open('file_names.json', 'r') as f:
     file_names = json.load(f)
 
+def check_internet_connection():
+    try:
+        requests.get('https://www.google.com', timeout=5)
+        return True
+    except requests.ConnectionError:
+        print("NO INTERNET CONNECTION AVAILABLE.")
+        return False
+
 def create_svg_flag(country_code, file_name, destination_folder):
     try:
         alpha_2_code = country_alpha3_to_country_alpha2(country_code)
@@ -24,7 +32,7 @@ def create_svg_flag(country_code, file_name, destination_folder):
             svg_file_name = f"{file_name}.svg" if not file_name.endswith('.svg') else file_name
             with open(os.path.join(destination_folder, svg_file_name), 'wb') as file:
                 file.write(response.content)
-            print(f"CREATED SVG FOR {country.name} in {destination_folder}")
+            print(f"CREATED SVG FOR {country.name} in {destination_folder} THROUGH 'https://flagcdn.com/{alpha_2_code.lower()}.svg' LINK")
             return country.name
         else:
             print(f"ERROR WITH DOWNLOADING FLAG FOR {country.name}: {response.status_code}")
@@ -38,6 +46,16 @@ os.makedirs(log_folder, exist_ok=True)
 
 now = datetime.now()
 log_file = f"{log_folder}/process_log_{now.strftime('%Y%m%d-%H%M%S')}.log"
+
+internet_connection = check_internet_connection()
+timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S%m')
+with open(log_file, 'a') as log:
+    if internet_connection:
+        log.write(f"{timestamp} - 0. INTERNET CONNECTION: OK\n")
+    else:
+        log.write(f"{timestamp} - 0. INTERNET CONNECTION: NOT OK\n")
+        print("No internet connection available.")
+        exit()
 
 os.makedirs(destination_folder, exist_ok=True)
 
@@ -61,7 +79,7 @@ for i, file_name in enumerate(file_names, start=1):
     else:
         print(f"FILE {svg_file_name} NOT FOUND: ERROR {response.status_code}")
         with open(log_file, 'a') as log:
-            log.write(f"{timestamp} - {i}. FILE {svg_file_name} NOT FOUND: ERROR {response.status_code}\n")
+            log.write(f"{timestamp} - {i}. FILE {svg_file_name} NOT FOUND: ERROR {response.status_code}. IDENTIFY THE FILE NAME AND CHECK SPELLING OR THE\n")
         country_name = create_svg_flag(country_code, svg_file_name, destination_folder)
         if country_name:
             with open(log_file, 'a') as log:

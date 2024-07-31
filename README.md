@@ -31,10 +31,13 @@ This Python script downloads SVG files of country flags from a specified URL. If
     ]
 
 6. Run the script:
-   
-`python flag_scrape.py`
+
+   ```bash
+   python flag_scrape.py
 
 ## Example Log Entry:
+
+Here is an example of the log entry:
 
       2024-07-31 14:49:3607 - 1. LINK RECEIVED: https://www.url.com/folder1/folder2/folder3/nld.svg
       2024-07-31 14:49:3607 - 1. FILE NAME RECEIVED: nld.svg
@@ -44,8 +47,10 @@ This Python script downloads SVG files of country flags from a specified URL. If
 
 ## Install Requirements
 In order to install requirements, run the script
+   ```bash
+   python flag_scrape.py
 
-`pip install -r requirements.txt`
+
 
 ## Notes:
 - The script creates a `logs` folder to store log files.

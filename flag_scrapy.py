@@ -5,6 +5,15 @@ from datetime import datetime
 import pycountry
 from pycountry_convert import country_alpha3_to_country_alpha2
 
+with open('config.json', 'r') as f:
+    config = json.load(f)
+
+base_url = config['base_url']
+destination_folder = config['destination_folder']
+
+with open('file_names.json', 'r') as f:
+    file_names = json.load(f)
+
 def create_svg_flag(country_code, file_name, destination_folder):
     try:
         alpha_2_code = country_alpha3_to_country_alpha2(country_code)
@@ -15,22 +24,14 @@ def create_svg_flag(country_code, file_name, destination_folder):
             svg_file_name = f"{file_name}.svg" if not file_name.endswith('.svg') else file_name
             with open(os.path.join(destination_folder, svg_file_name), 'wb') as file:
                 file.write(response.content)
-            print(f"CREATED SVG FOR {country.name}")
+            print(f"CREATED SVG FOR {country.name} in {destination_folder}")
             return country.name
         else:
             print(f"ERROR WITH DOWNLOADING FLAG FOR {country.name}: {response.status_code}")
+            return None
     except KeyError:
         print(f"COUNTRY CODE {country_code} NOT FOUND")
-
-
-with open('config.json', 'r') as f:
-    config = json.load(f)
-
-base_url = config['base_url']
-destination_folder = config['destination_folder']
-
-with open('file_names.json', 'r') as f:
-    file_names = json.load(f)
+        return None
 
 log_folder = "logs"
 os.makedirs(log_folder, exist_ok=True)
